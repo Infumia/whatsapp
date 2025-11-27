@@ -30,26 +30,20 @@ class TemplateService {
       'template': {
         'name': template,
         'language': {'code': language},
-        'components': []
+        'components': [
+          if (headerParameters != null && headerParameters.isNotEmpty)
+            {
+              'type': 'header',
+              'parameters': headerParameters,
+            },
+          if (placeholder != null && placeholder.isNotEmpty)
+            {
+              'type': 'body',
+              'parameters': placeholder,
+            }
+        ]
       },
     };
-
-    final components =
-        body['template']['components'] as List<Map<String, dynamic>>;
-
-    if (headerParameters != null && headerParameters.isNotEmpty) {
-      components.add({
-        'type': 'header',
-        'parameters': headerParameters,
-      });
-    }
-
-    if (placeholder != null && placeholder.isNotEmpty) {
-      components.add({
-        'type': 'body',
-        'parameters': placeholder,
-      });
-    }
 
     var url = '$fromNumberId/messages';
     try {
