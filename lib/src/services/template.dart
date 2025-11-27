@@ -12,8 +12,12 @@ class TemplateService {
 
   TemplateService(this.accessToken, this.fromNumberId, this.request);
 
-  Future<WhatsAppResponse> sendTemplate(String phoneNumber, String template,
-      String language, List<Map<String, dynamic>>? placeholder) async {
+  Future<WhatsAppResponse> sendTemplate(
+      String phoneNumber,
+      String template,
+      String language,
+      List<Map<String, dynamic>>? placeholder,
+      List<Map<String, dynamic>>? headerParameters) async {
     final Map<String, String> headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $accessToken',
@@ -29,6 +33,15 @@ class TemplateService {
         'components': []
       },
     };
+
+    if (headerParameters != null && headerParameters.isNotEmpty) {
+      body['template']['components'] = [
+        {
+          'type': 'header',
+          'parameters': headerParameters,
+        }
+      ];
+    }
 
     if (placeholder != null && placeholder.isNotEmpty) {
       body['template']['components'] = [
