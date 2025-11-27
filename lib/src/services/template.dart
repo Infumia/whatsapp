@@ -34,22 +34,21 @@ class TemplateService {
       },
     };
 
+    final components =
+        body['template']['components'] as List<Map<String, dynamic>>;
+
     if (headerParameters != null && headerParameters.isNotEmpty) {
-      body['template']['components'] = [
-        {
-          'type': 'header',
-          'parameters': headerParameters,
-        }
-      ];
+      components.add({
+        'type': 'header',
+        'parameters': headerParameters,
+      });
     }
 
     if (placeholder != null && placeholder.isNotEmpty) {
-      body['template']['components'] = [
-        {
-          'type': 'body',
-          'parameters': placeholder,
-        }
-      ];
+      components.add({
+        'type': 'body',
+        'parameters': placeholder,
+      });
     }
 
     var url = '$fromNumberId/messages';
